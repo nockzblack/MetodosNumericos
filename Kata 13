@@ -160,3 +160,31 @@ y2 = evalPolinomio(B,x2)
 plt.plot(x2,y2)
 plt.show()
 print(y2[4])
+
+
+#Metodo Lagrange
+x = [1950,1960,1970,1980,1990,2000]
+y = [123.5,131.2,150.7,141.3,203.2,240.5]
+
+pL = ''
+
+for k in range(len(x)):
+    pL += str(y[k])+'* ('
+    Lxk = 1
+    for j in range(len(x)):
+        if (j == k):
+            continue
+        pL += '(x-%f)*'%(x[j])
+        Lxk *= x[k] - x[j]
+    pL = pL[:~0] + '/%f) +'%(Lxk)
+pL = pL[:~0]
+expr = sympify(pL)
+
+plt.plot(x,y,'ro')
+x2 = np.linspace(1950,2000,12)
+y2 = []
+x = symbols('x')
+for i in range(len(x2)):
+    y2.append(expr.subs(x,x2[i]))
+plt.plot(x2,y2)
+print(y2[4])
